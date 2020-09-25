@@ -56,7 +56,7 @@ public class HudFragment extends Fragment{
         });
 
         Events.on(SectorLoseEvent.class, e -> {
-            showToast(Core.bundle.format(Icon.warning, "campaign.sectorlost", e.sector.id));
+            showToast(Icon.warning, Core.bundle.format("campaign.sectorlost", e.sector.id));
         });
 
         //TODO full implementation
@@ -287,7 +287,7 @@ public class HudFragment extends Fragment{
                     state.set(State.playing);
 
                     //announce turn info only when something is skipped.
-                    ui.announce((Core.bundle.format("campaign.turn", universe.turn(), " ]\n", "campaign.sectorsattacked", attackedSectors.size));
+                    ui.announce(Core.bundle.format("campaign.turn", universe.turn(), attackedSectors.size));
                 });
 
                 top.button("@campaign.switchsectors", () -> {
