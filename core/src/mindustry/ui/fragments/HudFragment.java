@@ -33,8 +33,7 @@ public class HudFragment extends Fragment{
 
     public final PlacementFragment blockfrag = new PlacementFragment();
 
-    //TODO localize
-    public String sectorText = "Out of sector time.";
+    public String sectorText = "@campaign.sectortimeout";
     public Seq<Sector> attackedSectors = new Seq<>();
 
     private ImageButton flip;
@@ -53,13 +52,11 @@ public class HudFragment extends Fragment{
 
         //TODO details and stuff
         Events.on(SectorCaptureEvent.class, e ->{
-            //TODO localize
-            showToast("Sector[accent] captured[]!");
+            showToast("@campaign.sectorcaptured");
         });
 
-        //TODO localize
         Events.on(SectorLoseEvent.class, e -> {
-            showToast(Icon.warning, "Sector " + e.sector.id + " [scarlet]lost!");
+            showToast(Core.bundle.format(Icon.warning, "campaign.sectorlost", e.sector.id));
         });
 
         //TODO full implementation
@@ -277,7 +274,6 @@ public class HudFragment extends Fragment{
         parent.fill(t -> {
             t.top().visible(() -> state.isOutOfTime());
             t.table(Styles.black5, top -> {
-                //TODO localize
                 top.add(sectorText).style(Styles.outlineLabel).color(Pal.accent).update(l -> {
                     l.color.a = Mathf.absin(Time.globalTime(), 7f, 1f);
                     l.setText(sectorText);
@@ -285,17 +281,15 @@ public class HudFragment extends Fragment{
                 top.row();
 
                 top.defaults().pad(2).size(150f, 54f);
-                //TODO localize
-                top.button("Skip", () -> {
+                top.button("@campaign.skip", () -> {
                     universe.runTurn();
                     state.set(State.playing);
 
                     //announce turn info only when something is skipped.
-                    ui.announce("[accent][[ Turn " + universe.turn() + " ]\n[scarlet]" + attackedSectors.size + "[lightgray] sector(s) attacked.");
+                    ui.announce((Core.bundle.format("campaign.turn", universe.turn(), " ]\n", "campaign.sectorsattacked", attackedSectors.size));
                 });
 
-                //TODO localize
-                top.button("Switch Sectors", () -> {
+                top.button("@campaign.switchsectors", () -> {
                     ui.paused.runExitSave();
 
                     //switch to first attacked sector
