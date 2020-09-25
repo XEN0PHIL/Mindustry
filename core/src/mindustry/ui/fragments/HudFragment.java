@@ -274,6 +274,7 @@ public class HudFragment extends Fragment{
         parent.fill(t -> {
             t.top().visible(() -> state.isOutOfTime());
             t.table(Styles.black5, top -> {
+                //TODO localize
                 top.add(sectorText).style(Styles.outlineLabel).color(Pal.accent).update(l -> {
                     l.color.a = Mathf.absin(Time.globalTime(), 7f, 1f);
                     l.setText(sectorText);
